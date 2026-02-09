@@ -31,7 +31,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Buttons */
 .btn {
   border: none;
   border-radius: 14px;
@@ -80,7 +79,6 @@ iframe {
   position: absolute;
   opacity: 0.45;
   animation: floatUp linear infinite;
-  filter: blur(0.2px);
   user-select: none;
 }
 
@@ -94,10 +92,10 @@ iframe {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 20; /* visible above card */
+  z-index: 20; /* above card */
 }
 
-/* Jumpscare overlay with your image */
+/* Jumpscare overlay */
 .jumpscare {
   position: fixed;
   inset: 0;

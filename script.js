@@ -13,7 +13,6 @@ const noBtn = document.getElementById("noBtn");
 const restartBtn = document.getElementById("restartBtn");
 
 const hint = document.getElementById("hint");
-
 const heartsLayer = document.getElementById("hearts");
 
 const confettiCanvas = document.getElementById("confetti");
@@ -22,7 +21,6 @@ const cctx = confettiCanvas.getContext("2d");
 const jumpscare = document.getElementById("jumpscare");
 const yt = document.getElementById("yt");
 
-// Replace with your happy cat YouTube video ID
 const YT_VIDEO_ID = "J---aiyznGQ";
 
 // ---- Screen helper ----
@@ -40,20 +38,19 @@ function initHearts(count = 26) {
     h.textContent = Math.random() > 0.5 ? "❤" : "💖";
 
     const size = 12 + Math.random() * 18;
-    const left = Math.random() * 100;      // vw
-    const delay = Math.random() * 8;       // s
-    const duration = 7 + Math.random() * 9;// s
+    const left = Math.random() * 100;
+    const delay = Math.random() * 8;
+    const duration = 7 + Math.random() * 9;
 
     h.style.fontSize = `${size}px`;
     h.style.left = `${left}vw`;
-    h.style.top = `${Math.random() * 100}vh`; // scatter starting positions
+    h.style.top = `${Math.random() * 100}vh`;
     h.style.animationDuration = `${duration}s`;
-    h.style.animationDelay = `-${delay}s`;    // negative so they’re already moving
+    h.style.animationDelay = `-${delay}s`;
 
     heartsLayer.appendChild(h);
   }
 }
-
 initHearts();
 
 // ---- Confetti ----
@@ -112,28 +109,27 @@ function burstConfetti() {
 // ---- Flow ----
 show("landing");
 
-startBtn.onclick = () => show("message");
-okBtn.onclick = () => show("question");
+startBtn.addEventListener("click", () => show("message"));
+okBtn.addEventListener("click", () => show("question"));
 
-yesBtn.onclick = () => {
+yesBtn.addEventListener("click", () => {
   burstConfetti();
   show("yes");
   yt.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
-};
+});
 
-restartBtn.onclick = () => {
+restartBtn.addEventListener("click", () => {
   yt.src = "";
   hint.textContent = "";
   resetNoButton();
   noCount = 0;
   armed = false;
   show("question");
-};
+});
 
 // ---- No button teleport + jumpscare ----
 let noCount = 0;
 let armed = false;
-// set how many dodges before arming jumpscare
 const ARM_AT = 5;
 
 function moveNoButton() {
@@ -150,7 +146,6 @@ function moveNoButton() {
   const x = rect.left + pad + Math.random() * Math.max(1, maxX);
   const y = rect.top + pad + Math.random() * Math.max(1, maxY);
 
-  // place relative to viewport with fixed positioning
   noBtn.style.position = "fixed";
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
@@ -174,24 +169,23 @@ function resetNoButton() {
 }
 
 function triggerJumpscare() {
-  armed = false; // one-time
-  playScream();  // loud-ish
+  armed = false;
+  playScream();
 
   jumpscare.classList.remove("hidden");
   setTimeout(() => {
     jumpscare.classList.add("hidden");
-    // keep it playful: after scare, move it again
     moveNoButton();
   }, 550);
 }
 
-// Trigger on hover (desktop)
+// Desktop hover
 noBtn.addEventListener("mouseenter", () => {
   if (armed) return triggerJumpscare();
   moveNoButton();
 });
 
-// Trigger on click (mobile)
+// Mobile tap
 noBtn.addEventListener("click", (e) => {
   e.preventDefault();
   if (armed) return triggerJumpscare();
@@ -199,19 +193,33 @@ noBtn.addEventListener("click", (e) => {
 });
 
 // ---- Loud “scream” (Web Audio) ----
-// NOTE: browsers require user interaction before audio plays.
-// Your page already has Start/OK clicks, so it should work.
 function playScream() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     const ac = new AudioContext();
 
-    // 1) White noise burst
     const noiseDur = 0.35;
     const bufferSize = Math.floor(ac.sampleRate * noiseDur);
     const buffer = ac.createBuffer(1, bufferSize, ac.sampleRate);
     const data = buffer.getChannelData(0);
+
     for (let i = 0; i < bufferSize; i++) {
-      // harsher noise at start
       const t = i / bufferSize;
-      data[i] = (Math.random() * 2 - 1) * (1 -
+      data[i] = (Math.random() * 2 - 1) * (1 - t * 0.6);
+    }
+
+    const noise = ac.createBufferSource();
+    noise.buffer = buffer;
+
+    const osc = ac.createOscillator();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(880, ac.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(180, ac.currentTime + 0.25);
+
+    const gain = ac.createGain();
+    gain.gain.setValueAtTime(1.0, ac.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.35);
+
+    const oscGain = ac.createGain();
+    oscGain.gain.setValueAtTime(0.65, ac.currentTime);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.35

@@ -23,19 +23,10 @@ body {
   border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* IMPORTANT: default is visible, JS will hide non-active */
-.screen {
-  display: block;
-}
-
-/* JS-controlled visibility */
-.screen.is-hidden {
-  display: none;
-}
-
-.screen.animate-in {
-  animation: fadeIn .25s ease;
-}
+/* default visible, JS hides non-active */
+.screen { display: block; }
+.screen.is-hidden { display: none; }
+.screen.animate-in { animation: fadeIn .25s ease; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -51,6 +42,7 @@ body {
   transition: transform .12s ease, opacity .12s ease;
 }
 .btn:active { transform: scale(0.97); }
+
 .primary { background: #ff4d7d; color: white; }
 .ghost { background: rgba(0,0,0,0.08); }
 
@@ -63,6 +55,17 @@ body {
 .answers { display: grid; gap: 10px; }
 .answers .btn { width: 100%; }
 
+/* Valentine YES/NO layout */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hint { margin-top: 10px; min-height: 22px; font-size: 14px; opacity: 0.75; }
+
+/* Video */
 .video {
   width: 100%;
   aspect-ratio: 16 / 9;

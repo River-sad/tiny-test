@@ -8,14 +8,18 @@
 </head>
 <body>
   <main class="card" id="app">
-    <h1 id="title">Quick question…</h1>
-    <p id="subtitle">I built a tiny thing. Can you try it?</p>
 
-    <div class="actions" id="startActions">
-      <button class="btn primary" id="startBtn">Start</button>
+    <!-- Landing screen -->
+    <div id="landing">
+      <h1>Quick Question</h1>
+      <div class="actions">
+        <button class="btn primary" id="startBtn">Start</button>
+      </div>
     </div>
 
+    <!-- Question screen -->
     <div class="question hidden" id="question">
+      <p class="subtitle">I built a tiny thing. Can you try it?</p>
       <h2>Will you be my Valentine? 💘</h2>
       <div class="actions">
         <button class="btn primary" id="yesBtn">Yes</button>
@@ -24,11 +28,11 @@
       <p class="hint" id="hint"></p>
     </div>
 
+    <!-- Yes screen -->
     <div class="yes-screen hidden" id="yesScreen">
       <h2>YAYYYYY!! 🎉🐱</h2>
       <p>You just made my whole day ❤️</p>
 
-      <!-- Option 1: YouTube embed (replace VIDEO_ID). -->
       <div class="video">
         <iframe
           id="yt"
@@ -43,6 +47,7 @@
       <button class="btn ghost" id="restartBtn">Replay</button>
       <p class="tiny">ps: you’re stuck with me now 😌</p>
     </div>
+
   </main>
 
   <script src="script.js"></script>

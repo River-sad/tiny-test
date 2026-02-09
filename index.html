@@ -7,38 +7,53 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Hearts layer (starts ONLY after YES) -->
+  <div id="hearts" class="hearts hidden" aria-hidden="true"></div>
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+
+  <!-- Jumpscare overlay -->
+  <div id="jumpscare" class="jumpscare hidden" aria-hidden="true">
+    <div class="jumpscare-content">
+      <div class="jumpscare-face">😼</div>
+      <div class="jumpscare-text">BOO.</div>
+    </div>
+  </div>
+
   <main class="card" id="app">
 
-    <!-- Landing screen -->
-    <div id="landing">
-      <h1>Quick Question</h1>
+    <!-- Landing -->
+    <section id="landing" class="screen active">
+      <h1 class="title">Quick Question</h1>
       <div class="actions">
         <button class="btn primary" id="startBtn">Start</button>
       </div>
-    </div>
+    </section>
 
-    <!-- Message screen -->
-    <div id="message" class="hidden">
+    <!-- Message -->
+    <section id="message" class="screen hidden">
       <p class="subtitle">I built a tiny thing. Can you try it?</p>
       <div class="actions">
         <button class="btn primary" id="okBtn">OK</button>
       </div>
-    </div>
+    </section>
 
-    <!-- Valentine question -->
-    <div class="question hidden" id="question">
-      <h2>Will you be my Valentine? 💘</h2>
+    <!-- Question (ONLY the valentine question on screen) -->
+    <section id="question" class="screen hidden">
+      <h2 class="question-title">Will you be my Valentine? 💘</h2>
       <div class="actions">
         <button class="btn primary" id="yesBtn">Yes</button>
         <button class="btn ghost" id="noBtn">No</button>
       </div>
       <p class="hint" id="hint"></p>
-    </div>
+    </section>
 
     <!-- Yes screen -->
-    <div class="yes-screen hidden" id="yesScreen">
-      <h2>YAYYYYY!! 🎉🐱</h2>
-      <p>You just made my whole day ❤️</p>
+    <section id="yesScreen" class="screen hidden">
+      <h2 class="question-title">YAYYYYY!! 🎉🐱</h2>
+      <p class="muted">You just made my whole day ❤️</p>
 
       <div class="video">
         <iframe
@@ -52,8 +67,8 @@
       </div>
 
       <button class="btn ghost" id="restartBtn">Replay</button>
-      <p class="tiny">ps: you’re stuck with me now 😌</p>
-    </div>
+      <p class="tiny muted">ps: you’re stuck with me now 😌</p>
+    </section>
 
   </main>
 

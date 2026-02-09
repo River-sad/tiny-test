@@ -11,11 +11,10 @@ body {
   position: relative;
 }
 
-/* Card */
 .card {
   position: relative;
   z-index: 10;
-  width: min(520px, 92vw);
+  width: min(560px, 92vw);
   background: rgba(255,255,255,0.92);
   border-radius: 22px;
   padding: 24px;
@@ -24,26 +23,12 @@ body {
   border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Screens */
-.screen {
-  display: none;
-  animation: fadeIn 0.28s ease;
-}
-.screen.active {
-  display: block;
-}
+.screen { display: none; animation: fadeIn .25s ease; }
+.screen.active { display: block; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* Buttons */
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
 }
 
 .btn {
@@ -56,31 +41,38 @@ body {
 }
 .btn:active { transform: scale(0.97); }
 
-.primary {
-  background: #ff4d7d;
-  color: white;
-}
-.ghost {
-  background: rgba(0,0,0,0.08);
-}
+.primary { background: #ff4d7d; color: white; }
+.ghost { background: rgba(0,0,0,0.08); }
 
-.hint {
-  font-size: 14px;
-  margin-top: 10px;
-  opacity: 0.75;
-  min-height: 22px;
+.muted { opacity: 0.82; }
+.tiny { font-size: 12px; opacity: 0.75; margin-top: 12px; }
+
+.progress {
+  margin: 0 0 10px;
+  font-size: 13px;
+  opacity: 0.7;
 }
 
-.muted { opacity: 0.8; }
-.tiny { font-size: 12px; opacity: 0.7; }
+.q {
+  margin: 0 0 14px;
+  line-height: 1.25;
+}
 
-/* Video */
+.answers {
+  display: grid;
+  gap: 10px;
+}
+
+.answers .btn {
+  width: 100%;
+}
+
 .video {
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
-  margin: 12px auto;
+  margin-top: 12px;
   background: rgba(0,0,0,0.06);
 }
 .video iframe {
@@ -89,7 +81,7 @@ body {
   border: none;
 }
 
-/* Floating hearts background */
+/* Hearts */
 .hearts {
   position: fixed;
   inset: 0;
@@ -110,12 +102,16 @@ body {
   to   { transform: translateY(-140vh) scale(1.2); }
 }
 
-/* Individual heart timings */
-.h1 { left: 10vw; animation-duration: 10s; animation-delay: -2s; }
-.h2 { left: 25vw; animation-duration: 12s; animation-delay: -6s; }
-.h3 { left: 40vw; animation-duration: 9s;  animation-delay: -4s; }
-.h4 { left: 55vw; animation-duration: 13s; animation-delay: -8s; }
-.h5 { left: 70vw; animation-duration: 11s; animation-delay: -3s; }
-.h6 { left: 85vw; animation-duration: 14s; animation-delay: -9s; }
-.h7 { left: 18vw; animation-duration: 15s; animation-delay: -7s; }
-.h8 { left: 62vw; animation-duration: 12.5s; animation-delay: -5s; }
+/* Individual heart timings/positions */
+.h1 { left: 6vw;  animation-duration: 10s; animation-delay: -2s; }
+.h2 { left: 14vw; animation-duration: 13s; animation-delay: -8s; font-size: 18px; }
+.h3 { left: 24vw; animation-duration: 9s;  animation-delay: -5s; font-size: 26px; }
+.h4 { left: 34vw; animation-duration: 15s; animation-delay: -11s; }
+.h5 { left: 44vw; animation-duration: 11s; animation-delay: -6s; font-size: 20px; }
+.h6 { left: 54vw; animation-duration: 14s; animation-delay: -3s; font-size: 28px; }
+.h7 { left: 64vw; animation-duration: 10.5s; animation-delay: -7s; }
+.h8 { left: 74vw; animation-duration: 12.5s; animation-delay: -4s; font-size: 19px; }
+.h9 { left: 84vw; animation-duration: 16s; animation-delay: -12s; font-size: 24px; }
+.h10{ left: 92vw; animation-duration: 12s; animation-delay: -9s; font-size: 17px; }
+.h11{ left: 40vw; animation-duration: 9.5s; animation-delay: -1s; font-size: 25px; }
+.h12{ left: 70vw; animation-duration: 13.5s; animation-delay: -10s; font-size: 21px; }

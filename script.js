@@ -1,90 +1,86 @@
 const screens = {
   landing: document.getElementById("landing"),
-  message: document.getElementById("message"),
-  question: document.getElementById("question"),
-  yes: document.getElementById("yesScreen")
+  intro: document.getElementById("intro"),
+  quiz: document.getElementById("quiz"),
+  yes: document.getElementById("yesScreen"),
 };
 
 const startBtn = document.getElementById("startBtn");
-const okBtn = document.getElementById("okBtn");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
+const beginQuizBtn = document.getElementById("beginQuizBtn");
 const restartBtn = document.getElementById("restartBtn");
-const hint = document.getElementById("hint");
+
+const progressText = document.getElementById("progressText");
+const quizQuestion = document.getElementById("quizQuestion");
+const quizAnswers = document.getElementById("quizAnswers");
 
 const yt = document.getElementById("yt");
-const YT_VIDEO_ID = "J---aiyznGQ"; // same video as before
+const YT_VIDEO_ID = "J---aiyznGQ"; // same as before
+
+// 🔧 EDIT THESE ANSWERS to match your story (dates/places/etc.)
+const quiz = [
+  // 10 questions first
+  { q: "When did we first meet? 🗓️", a: ["2021", "2022", "2023"] },
+  { q: "How did we first meet? 👀", a: ["Through friends", "Online", "By coincidence"] },
+  { q: "Where was our first proper hangout? 📍", a: ["A café", "A park", "A bar"] },
+  { q: "What was the first thing you noticed about me? 😌", a: ["My smile", "My eyes", "My vibe"] },
+  { q: "What’s our #1 comfort activity together? 🛋️", a: ["Movie night", "Food + chat", "Walks"] },
+  { q: "Pick a Valentine snack 🍫", a: ["Chocolate", "Ice cream", "All of the above"] },
+  { q: "If we could travel right now ✈️", a: ["Beach", "City", "Mountains"] },
+  { q: "Which vibe is most ‘us’? 💞", a: ["Soft & cute", "Funny & chaotic", "Chill & cozy"] },
+  { q: "What should our Valentine date include? 🍝", a: ["Good food", "A surprise", "A kiss"] },
+  { q: "Final warm-up question… how much do you love me? 😳", a: ["A lot", "So much", "Infinity"] },
+
+  // 11th question = valentine question
+  { q: "Okay… last question 😌", a: ["Will you be my Valentine? 💘"], isFinal: true }
+];
+
+let idx = 0;
 
 function show(name) {
   Object.values(screens).forEach(s => s.classList.remove("active"));
   screens[name].classList.add("active");
 }
 
-// Initial screen
-show("landing");
+function renderQuiz() {
+  const item = quiz[idx];
+  progressText.textContent = `Question ${idx + 1} of ${quiz.length}`;
+  quizQuestion.textContent = item.q;
+  quizAnswers.innerHTML = "";
+
+  item.a.forEach((answer) => {
+    const btn = document.createElement("button");
+    btn.className = "btn primary";
+    btn.textContent = answer;
+
+    btn.addEventListener("click", () => {
+      if (item.isFinal) {
+        show("yes");
+        // Audio ON (may still depend on browser autoplay rules, but user clicked a lot already)
+        yt.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
+        return;
+      }
+      idx++;
+      renderQuiz();
+    });
+
+    quizAnswers.appendChild(btn);
+  });
+}
 
 // Flow
-startBtn.addEventListener("click", () => show("message"));
-okBtn.addEventListener("click", () => show("question"));
+show("landing");
 
-yesBtn.addEventListener("click", () => {
-  hint.textContent = "";
-  resetNoButton();
-  noCount = 0;
-  show("yes");
+startBtn.addEventListener("click", () => show("intro"));
 
-  yt.src =
-  `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
-
+beginQuizBtn.addEventListener("click", () => {
+  idx = 0;
+  yt.src = "";
+  show("quiz");
+  renderQuiz();
 });
 
 restartBtn.addEventListener("click", () => {
   yt.src = "";
-  hint.textContent = "";
-  resetNoButton();
-  noCount = 0;
-  show("question");
-});
-
-// No button movement
-let noCount = 0;
-
-function moveNoButton() {
-  noCount++;
-
-  const card = document.querySelector(".card");
-  const rect = card.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
-  const pad = 16;
-
-  const maxX = rect.width - btnRect.width - pad;
-  const maxY = rect.height - btnRect.height - pad;
-
-  const x = rect.left + pad + Math.random() * Math.max(1, maxX);
-  const y = rect.top + pad + Math.random() * Math.max(1, maxY);
-
-  noBtn.style.position = "fixed";
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-
-  const messages = [
-    "Nice try 😅",
-    "Nope 🙃",
-    "You sure? 👀",
-    "This button is shy…",
-    "Okay okay 😂"
-  ];
-  hint.textContent = messages[Math.min(noCount - 1, messages.length - 1)];
-}
-
-function resetNoButton() {
-  noBtn.style.position = "";
-  noBtn.style.left = "";
-  noBtn.style.top = "";
-}
-
-noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  moveNoButton();
+  idx = 0;
+  show("landing");
 });

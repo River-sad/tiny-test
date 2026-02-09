@@ -1,37 +1,47 @@
+// ---- Grab elements (failsafe) ----
+function mustGet(id) {
+  const el = document.getElementById(id);
+  if (!el) console.error(`Missing element #${id} in index.html`);
+  return el;
+}
+
 const screens = {
-  landing: document.getElementById("landing"),
-  intro: document.getElementById("intro"),
-  quiz: document.getElementById("quiz"),
-  yes: document.getElementById("yesScreen"),
+  landing: mustGet("landing"),
+  intro: mustGet("intro"),
+  quiz: mustGet("quiz"),
+  yes: mustGet("yesScreen"),
 };
 
-const startBtn = document.getElementById("startBtn");
-const beginQuizBtn = document.getElementById("beginQuizBtn");
-const restartBtn = document.getElementById("restartBtn");
+const startBtn = mustGet("startBtn");
+const beginQuizBtn = mustGet("beginQuizBtn");
+const restartBtn = mustGet("restartBtn");
 
-const progressText = document.getElementById("progressText");
-const quizQuestion = document.getElementById("quizQuestion");
-const quizAnswers = document.getElementById("quizAnswers");
+const progressText = mustGet("progressText");
+const quizQuestion = mustGet("quizQuestion");
+const quizAnswers = mustGet("quizAnswers");
 
-const yt = document.getElementById("yt");
-const YT_VIDEO_ID = "J---aiyznGQ"; // same as before
+const yt = mustGet("yt");
 
-// 🔧 EDIT THESE ANSWERS to match your story (dates/places/etc.)
+// If any critical element is missing, stop early to avoid “nothing works”
+if (!startBtn || !beginQuizBtn || !quizQuestion || !quizAnswers) {
+  throw new Error("Fix the missing IDs shown in the console.");
+}
+
+const YT_VIDEO_ID = "J---aiyznGQ"; // your earlier video
+
+// 10 questions + final Valentine question
 const quiz = [
-  // 10 questions first
   { q: "When did we first meet? 🗓️", a: ["2021", "2022", "2023"] },
   { q: "How did we first meet? 👀", a: ["Through friends", "Online", "By coincidence"] },
   { q: "Where was our first proper hangout? 📍", a: ["A café", "A park", "A bar"] },
   { q: "What was the first thing you noticed about me? 😌", a: ["My smile", "My eyes", "My vibe"] },
-  { q: "What’s our #1 comfort activity together? 🛋️", a: ["Movie night", "Food + chat", "Walks"] },
-  { q: "Pick a Valentine snack 🍫", a: ["Chocolate", "Ice cream", "All of the above"] },
+  { q: "What’s our comfort activity together? 🛋️", a: ["Movie night", "Food + chat", "Walks"] },
+  { q: "Pick a Valentine snack 🍫", a: ["Chocolate", "Ice cream", "Both"] },
   { q: "If we could travel right now ✈️", a: ["Beach", "City", "Mountains"] },
   { q: "Which vibe is most ‘us’? 💞", a: ["Soft & cute", "Funny & chaotic", "Chill & cozy"] },
   { q: "What should our Valentine date include? 🍝", a: ["Good food", "A surprise", "A kiss"] },
-  { q: "Final warm-up question… how much do you love me? 😳", a: ["A lot", "So much", "Infinity"] },
-
-  // 11th question = valentine question
-  { q: "Okay… last question 😌", a: ["Will you be my Valentine? 💘"], isFinal: true }
+  { q: "How much do you love me? 😳", a: ["A lot", "So much", "Infinity"] },
+  { q: "Okay… last question 😌", a: ["Will you be my Valentine? 💘"], isFinal: true },
 ];
 
 let idx = 0;
@@ -55,19 +65,19 @@ function renderQuiz() {
     btn.addEventListener("click", () => {
       if (item.isFinal) {
         show("yes");
-        // Audio ON (may still depend on browser autoplay rules, but user clicked a lot already)
+        // audio ON (browser may still require user interaction — which has happened)
         yt.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
-        return;
+      } else {
+        idx++;
+        renderQuiz();
       }
-      idx++;
-      renderQuiz();
     });
 
     quizAnswers.appendChild(btn);
   });
 }
 
-// Flow
+// ---- Flow ----
 show("landing");
 
 startBtn.addEventListener("click", () => show("intro"));

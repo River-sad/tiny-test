@@ -1,5 +1,7 @@
 const startBtn = document.getElementById("startBtn");
+const okBtn = document.getElementById("okBtn");
 const landing = document.getElementById("landing");
+const message = document.getElementById("message");
 
 const question = document.getElementById("question");
 const yesBtn = document.getElementById("yesBtn");
@@ -15,9 +17,15 @@ const YT_VIDEO_ID = "J---aiyznGQ";
 
 let noCount = 0;
 
-// Start flow
+// Start → message
 startBtn.addEventListener("click", () => {
   landing.classList.add("hidden");
+  message.classList.remove("hidden");
+});
+
+// Message → question
+okBtn.addEventListener("click", () => {
+  message.classList.add("hidden");
   question.classList.remove("hidden");
 });
 
@@ -29,15 +37,15 @@ yesBtn.addEventListener("click", () => {
   yt.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
 });
 
-// NO button teleport logic
+// NO button teleport
 function moveNoButton() {
   noCount++;
 
   const card = document.querySelector(".card");
   const rect = card.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
-
   const padding = 18;
+
   const maxX = rect.width - btnRect.width - padding;
   const maxY = rect.height - btnRect.height - padding;
 
@@ -53,16 +61,13 @@ function moveNoButton() {
     "Nope 🙃",
     "You sure about that? 👀",
     "This button is shy…",
-    "Okay… interesting choice 😂"
+    "Okay… interesting 😂"
   ];
 
   hint.textContent = messages[Math.min(noCount - 1, messages.length - 1)];
 }
 
-// Desktop hover
 noBtn.addEventListener("mouseenter", moveNoButton);
-
-// Mobile tap
 noBtn.addEventListener("click", (e) => {
   e.preventDefault();
   moveNoButton();

@@ -8,27 +8,34 @@
 </head>
 <body>
 
-  <!-- Cute hearts background -->
-  <div id="hearts" class="hearts" aria-hidden="true"></div>
-
-  <!-- Confetti canvas -->
-  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+  <!-- Hearts background -->
+  <div class="hearts" aria-hidden="true">
+    <span class="heart h1">💗</span>
+    <span class="heart h2">💖</span>
+    <span class="heart h3">💕</span>
+    <span class="heart h4">💘</span>
+    <span class="heart h5">💗</span>
+    <span class="heart h6">💖</span>
+    <span class="heart h7">💕</span>
+    <span class="heart h8">💘</span>
+    <span class="heart h9">💗</span>
+    <span class="heart h10">💖</span>
+    <span class="heart h11">💕</span>
+    <span class="heart h12">💘</span>
+  </div>
 
   <main class="card">
 
-    <!-- Landing -->
     <section id="landing" class="screen active">
       <h1>Quick Question</h1>
       <button class="btn primary" id="startBtn">Start</button>
     </section>
 
-    <!-- Message -->
     <section id="message" class="screen">
       <p>I built a tiny thing. Can you try it?</p>
       <button class="btn primary" id="okBtn">OK</button>
     </section>
 
-    <!-- Question -->
     <section id="question" class="screen">
       <h2>Will you be my Valentine? 💘</h2>
       <div class="actions">
@@ -38,12 +45,15 @@
       <p class="hint" id="hint"></p>
     </section>
 
-    <!-- Yes -->
     <section id="yesScreen" class="screen">
-      <h2>YAYYYYY 🎉🐱</h2>
+      <h2>YAYYYYY 🎉</h2>
       <p class="muted">You just made my whole day ❤️</p>
-      <iframe id="yt" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+      <!-- Put a gif at: assets/happycat.gif -->
+      <img class="cat" src="assets/happycat.gif" alt="Happy cat">
+
       <button class="btn ghost" id="restartBtn">Replay</button>
+      <p class="tiny muted">ps: you’re stuck with me now 😌</p>
     </section>
 
   </main>

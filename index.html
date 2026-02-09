@@ -8,16 +8,14 @@
 </head>
 <body>
 
-  <!-- Floating hearts (only after YES) -->
-  <div id="hearts" class="hearts hidden"></div>
+  <!-- Floating hearts background -->
+  <div id="hearts" class="hearts" aria-hidden="true"></div>
 
-  <!-- Confetti -->
-  <canvas id="confetti" class="confetti"></canvas>
+  <!-- Confetti canvas -->
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
 
-  <!-- Jumpscare -->
-  <div id="jumpscare" class="jumpscare hidden">
-    <div class="jumpscare-face">😼</div>
-  </div>
+  <!-- Jumpscare overlay -->
+  <div id="jumpscare" class="jumpscare hidden" aria-hidden="true"></div>
 
   <main class="card">
 
@@ -46,11 +44,9 @@
     <!-- Yes -->
     <section id="yesScreen" class="screen hidden">
       <h2>YAYYYYY 🎉🐱</h2>
-      <iframe
-        id="yt"
-        allow="autoplay"
-        allowfullscreen>
-      </iframe>
+      <p class="muted">You just made my whole day ❤️</p>
+      <iframe id="yt" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <button class="btn ghost" id="restartBtn">Replay</button>
     </section>
 
   </main>

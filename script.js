@@ -34,7 +34,8 @@ yesBtn.addEventListener("click", () => {
   show("yes");
 
   yt.src =
-    `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_VIDEO_ID}`;
+  `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
+
 });
 
 restartBtn.addEventListener("click", () => {

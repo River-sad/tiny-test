@@ -2,7 +2,7 @@ const screens = {
   landing: document.getElementById("landing"),
   message: document.getElementById("message"),
   question: document.getElementById("question"),
-  yes: document.getElementById("yesScreen"),
+  yes: document.getElementById("yesScreen")
 };
 
 const startBtn = document.getElementById("startBtn");
@@ -12,13 +12,18 @@ const noBtn = document.getElementById("noBtn");
 const restartBtn = document.getElementById("restartBtn");
 const hint = document.getElementById("hint");
 
-function show(name){
+const yt = document.getElementById("yt");
+const YT_VIDEO_ID = "J---aiyznGQ"; // same video as before
+
+function show(name) {
   Object.values(screens).forEach(s => s.classList.remove("active"));
   screens[name].classList.add("active");
 }
 
+// Initial screen
 show("landing");
 
+// Flow
 startBtn.addEventListener("click", () => show("message"));
 okBtn.addEventListener("click", () => show("question"));
 
@@ -27,19 +32,23 @@ yesBtn.addEventListener("click", () => {
   resetNoButton();
   noCount = 0;
   show("yes");
+
+  yt.src =
+    `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_VIDEO_ID}`;
 });
 
 restartBtn.addEventListener("click", () => {
+  yt.src = "";
   hint.textContent = "";
   resetNoButton();
   noCount = 0;
   show("question");
 });
 
-// --- No button moves around ---
+// No button movement
 let noCount = 0;
 
-function moveNoButton(){
+function moveNoButton() {
   noCount++;
 
   const card = document.querySelector(".card");
@@ -67,11 +76,14 @@ function moveNoButton(){
   hint.textContent = messages[Math.min(noCount - 1, messages.length - 1)];
 }
 
-function resetNoButton(){
+function resetNoButton() {
   noBtn.style.position = "";
   noBtn.style.left = "";
   noBtn.style.top = "";
 }
 
 noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", (e) => { e.preventDefault(); moveNoButton(); });
+noBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  moveNoButton();
+});

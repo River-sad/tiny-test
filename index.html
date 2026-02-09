@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- Floating hearts background -->
   <div class="hearts" aria-hidden="true">
     <span class="heart h1">💖</span><span class="heart h2">💕</span><span class="heart h3">💗</span>
     <span class="heart h4">💘</span><span class="heart h5">💖</span><span class="heart h6">💕</span>
@@ -16,20 +15,18 @@
   </div>
 
   <main class="card">
-
-    <!-- Landing -->
-    <section id="landing" class="screen active">
+    <!-- If JS fails, you will still see the landing content because it's not hidden by default -->
+    <section id="landing" class="screen">
       <h1>Quick Question</h1>
       <button class="btn primary" id="startBtn">Start</button>
+      <p class="tiny muted" id="jsStatus">Loading…</p>
     </section>
 
-    <!-- Intro -->
     <section id="intro" class="screen">
       <p class="muted">I built a tiny quiz. Can you answer all the questions? 😌</p>
       <button class="btn primary" id="beginQuizBtn">OK</button>
     </section>
 
-    <!-- Quiz -->
     <section id="quiz" class="screen">
       <p class="progress" id="progressText"></p>
       <h2 id="quizQuestion" class="q"></h2>
@@ -37,7 +34,6 @@
       <p class="tiny muted">No pressure… but also yes pressure 😌</p>
     </section>
 
-    <!-- Yes -->
     <section id="yesScreen" class="screen">
       <h2>YAYYYYY 💘</h2>
       <p class="muted">You just made my whole day ❤️</p>
@@ -55,7 +51,6 @@
       <button class="btn ghost" id="restartBtn">Replay</button>
       <p class="tiny muted">ps: you’re stuck with me now 😌</p>
     </section>
-
   </main>
 
   <script src="script.js"></script>

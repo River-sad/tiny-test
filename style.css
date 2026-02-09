@@ -23,8 +23,19 @@ body {
   border: 1px solid rgba(0,0,0,0.05);
 }
 
-.screen { display: none; animation: fadeIn .25s ease; }
-.screen.active { display: block; }
+/* IMPORTANT: default is visible, JS will hide non-active */
+.screen {
+  display: block;
+}
+
+/* JS-controlled visibility */
+.screen.is-hidden {
+  display: none;
+}
+
+.screen.animate-in {
+  animation: fadeIn .25s ease;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -40,19 +51,13 @@ body {
   transition: transform .12s ease, opacity .12s ease;
 }
 .btn:active { transform: scale(0.97); }
-
 .primary { background: #ff4d7d; color: white; }
 .ghost { background: rgba(0,0,0,0.08); }
 
 .muted { opacity: 0.82; }
-.tiny { font-size: 12px; opacity: 0.75; margin-top: 12px; }
+.tiny { font-size: 12px; opacity: 0.75; margin-top: 10px; }
 
-.progress {
-  margin: 0 0 10px;
-  font-size: 13px;
-  opacity: 0.7;
-}
-
+.progress { margin: 0 0 10px; font-size: 13px; opacity: 0.7; }
 .q { margin: 0 0 14px; line-height: 1.25; }
 
 .answers { display: grid; gap: 10px; }
@@ -76,19 +81,16 @@ body {
   z-index: 1;
   opacity: 0.5;
 }
-
 .heart {
   position: absolute;
   font-size: 22px;
   animation: floatUp linear infinite;
   filter: blur(0.2px);
 }
-
 @keyframes floatUp {
   from { transform: translateY(110vh) scale(0.9); }
   to   { transform: translateY(-140vh) scale(1.2); }
 }
-
 .h1 { left: 10vw; animation-duration: 10s; animation-delay: -2s; }
 .h2 { left: 25vw; animation-duration: 13s; animation-delay: -8s; font-size: 18px; }
 .h3 { left: 40vw; animation-duration: 9s;  animation-delay: -5s; font-size: 26px; }

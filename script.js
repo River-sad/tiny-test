@@ -1,35 +1,26 @@
-// ---- Grab elements (failsafe) ----
-function mustGet(id) {
-  const el = document.getElementById(id);
-  if (!el) console.error(`Missing element #${id} in index.html`);
-  return el;
-}
+// If script loads, this text will change
+const jsStatus = document.getElementById("jsStatus");
+if (jsStatus) jsStatus.textContent = "✅ Ready";
 
-const screens = {
-  landing: mustGet("landing"),
-  intro: mustGet("intro"),
-  quiz: mustGet("quiz"),
-  yes: mustGet("yesScreen"),
-};
+// Elements
+const landing = document.getElementById("landing");
+const intro = document.getElementById("intro");
+const quizEl = document.getElementById("quiz");
+const yesScreen = document.getElementById("yesScreen");
 
-const startBtn = mustGet("startBtn");
-const beginQuizBtn = mustGet("beginQuizBtn");
-const restartBtn = mustGet("restartBtn");
+const startBtn = document.getElementById("startBtn");
+const beginQuizBtn = document.getElementById("beginQuizBtn");
+const restartBtn = document.getElementById("restartBtn");
 
-const progressText = mustGet("progressText");
-const quizQuestion = mustGet("quizQuestion");
-const quizAnswers = mustGet("quizAnswers");
+const progressText = document.getElementById("progressText");
+const quizQuestion = document.getElementById("quizQuestion");
+const quizAnswers = document.getElementById("quizAnswers");
 
-const yt = mustGet("yt");
+const yt = document.getElementById("yt");
 
-// If any critical element is missing, stop early to avoid “nothing works”
-if (!startBtn || !beginQuizBtn || !quizQuestion || !quizAnswers) {
-  throw new Error("Fix the missing IDs shown in the console.");
-}
+const YT_VIDEO_ID = "J---aiyznGQ";
 
-const YT_VIDEO_ID = "J---aiyznGQ"; // your earlier video
-
-// 10 questions + final Valentine question
+// 10 questions + final
 const quiz = [
   { q: "When did we first meet? 🗓️", a: ["2021", "2022", "2023"] },
   { q: "How did we first meet? 👀", a: ["Through friends", "Online", "By coincidence"] },
@@ -46,9 +37,18 @@ const quiz = [
 
 let idx = 0;
 
-function show(name) {
-  Object.values(screens).forEach(s => s.classList.remove("active"));
-  screens[name].classList.add("active");
+const screens = [landing, intro, quizEl, yesScreen].filter(Boolean);
+
+function showScreen(screen) {
+  // Hide all
+  screens.forEach(s => {
+    s.classList.add("is-hidden");
+    s.classList.remove("animate-in");
+  });
+
+  // Show chosen
+  screen.classList.remove("is-hidden");
+  requestAnimationFrame(() => screen.classList.add("animate-in"));
 }
 
 function renderQuiz() {
@@ -64,8 +64,7 @@ function renderQuiz() {
 
     btn.addEventListener("click", () => {
       if (item.isFinal) {
-        show("yes");
-        // audio ON (browser may still require user interaction — which has happened)
+        showScreen(yesScreen);
         yt.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
       } else {
         idx++;
@@ -77,20 +76,24 @@ function renderQuiz() {
   });
 }
 
-// ---- Flow ----
-show("landing");
+// Initial state: show landing, hide others
+if (intro) intro.classList.add("is-hidden");
+if (quizEl) quizEl.classList.add("is-hidden");
+if (yesScreen) yesScreen.classList.add("is-hidden");
+showScreen(landing);
 
-startBtn.addEventListener("click", () => show("intro"));
+// Buttons
+startBtn?.addEventListener("click", () => showScreen(intro));
 
-beginQuizBtn.addEventListener("click", () => {
+beginQuizBtn?.addEventListener("click", () => {
   idx = 0;
   yt.src = "";
-  show("quiz");
+  showScreen(quizEl);
   renderQuiz();
 });
 
-restartBtn.addEventListener("click", () => {
+restartBtn?.addEventListener("click", () => {
   yt.src = "";
   idx = 0;
-  show("landing");
+  showScreen(landing);
 });

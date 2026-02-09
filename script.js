@@ -253,3 +253,37 @@ function burstConfetti() {
 
   if (!confettiAnimating) {
     confettiAnimating = true;
+    requestAnimationFrame(confettiTick);
+  }
+}
+
+function confettiTick() {
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+
+  ctx.clearRect(0, 0, W, H);
+
+  confettiPieces.forEach(p => {
+    p.vy += p.g;
+    p.x += p.vx;
+    p.y += p.vy;
+    p.rot += p.vr;
+
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+    ctx.restore();
+  });
+
+  // remove off-screen
+  confettiPieces = confettiPieces.filter(p => p.y < H + 40);
+
+  if (confettiPieces.length > 0) {
+    requestAnimationFrame(confettiTick);
+  } else {
+    confettiAnimating = false;
+    ctx.clearRect(0, 0, W, H);
+  }
+}

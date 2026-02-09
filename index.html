@@ -1,55 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quick Question</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Surprise</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Floating hearts background -->
-  <div id="hearts" class="hearts" aria-hidden="true"></div>
+  <!-- START SCREEN -->
+  <div id="start" class="screen active">
+    <button id="startBtn">Start</button>
+  </div>
 
-  <!-- Confetti canvas -->
-  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+  <!-- MESSAGE SCREEN -->
+  <div id="message" class="screen">
+    <h1>Click anywhere 😈</h1>
+  </div>
 
-  <!-- Jumpscare overlay -->
-  <div id="jumpscare" class="jumpscare hidden" aria-hidden="true"></div>
-
-  <main class="card">
-
-    <!-- Landing -->
-    <section id="landing" class="screen active">
-      <h1>Quick Question</h1>
-      <button class="btn primary" id="startBtn">Start</button>
-    </section>
-
-    <!-- Message -->
-    <section id="message" class="screen">
-      <p>I built a tiny thing. Can you try it?</p>
-      <button class="btn primary" id="okBtn">OK</button>
-    </section>
-
-    <!-- Question -->
-    <section id="question" class="screen">
-      <h2>Will you be my Valentine? 💘</h2>
-      <div class="actions">
-        <button class="btn primary" id="yesBtn">Yes</button>
-        <button class="btn ghost" id="noBtn">No</button>
-      </div>
-      <p class="hint" id="hint"></p>
-    </section>
-
-    <!-- Yes -->
-    <section id="yesScreen" class="screen">
-      <h2>YAYYYYY 🎉🐱</h2>
-      <p class="muted">You just made my whole day ❤️</p>
-      <iframe id="yt" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      <button class="btn ghost" id="restartBtn">Replay</button>
-    </section>
-
-  </main>
+  <!-- JUMPSCARE -->
+  <div id="scare" class="screen">
+    <img src="https://i.imgur.com/6ZKQZ4B.png" alt="scare" />
+  </div>
 
   <script src="script.js"></script>
 </body>

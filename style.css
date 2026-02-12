@@ -8,30 +8,21 @@ body {
   font-family: system-ui, Arial, sans-serif;
   background: radial-gradient(circle at top, #ffe7f0, #fff7e6, #e9f7ff);
   overflow: hidden;
-  position: relative;
 }
 
 .card {
-  position: relative;
-  z-index: 10;
-  width: min(560px, 92vw);
+  width: min(600px, 92vw);
   background: rgba(255,255,255,0.92);
   border-radius: 22px;
   padding: 24px;
   text-align: center;
   box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-  border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 10;
 }
 
-/* default visible, JS hides non-active */
-.screen { display: block; }
-.screen.is-hidden { display: none; }
-.screen.animate-in { animation: fadeIn .25s ease; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.screen { display: none; }
+.screen.active { display: block; }
 
 .btn {
   border: none;
@@ -39,66 +30,74 @@ body {
   padding: 12px 18px;
   font-size: 16px;
   cursor: pointer;
-  transition: transform .12s ease, opacity .12s ease;
 }
-.btn:active { transform: scale(0.97); }
 
 .primary { background: #ff4d7d; color: white; }
 .ghost { background: rgba(0,0,0,0.08); }
 
-.muted { opacity: 0.82; }
-.tiny { font-size: 12px; opacity: 0.75; margin-top: 10px; }
+.answers {
+  display: grid;
+  gap: 10px;
+}
 
-.progress { margin: 0 0 10px; font-size: 13px; opacity: 0.7; }
-.q { margin: 0 0 14px; line-height: 1.25; }
+.open { display: none; }
+.open textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+}
 
-.answers { display: grid; gap: 10px; }
-.answers .btn { width: 100%; }
-
-/* Valentine YES/NO layout */
 .actions {
   display: flex;
   justify-content: center;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
-.hint { margin-top: 10px; min-height: 22px; font-size: 14px; opacity: 0.75; }
-
-/* Video */
 .video {
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
-  margin-top: 12px;
-  background: rgba(0,0,0,0.06);
+  margin: 12px 0;
 }
-.video iframe { width: 100%; height: 100%; border: none; }
+
+.video iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.progress {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.hint {
+  font-size: 14px;
+  opacity: 0.75;
+}
 
 /* Hearts */
 .hearts {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.5;
+  opacity: 0.4;
 }
+
 .heart {
   position: absolute;
-  font-size: 22px;
   animation: floatUp linear infinite;
-  filter: blur(0.2px);
 }
+
 @keyframes floatUp {
-  from { transform: translateY(110vh) scale(0.9); }
-  to   { transform: translateY(-140vh) scale(1.2); }
+  from { transform: translateY(110vh); }
+  to   { transform: translateY(-140vh); }
 }
-.h1 { left: 10vw; animation-duration: 10s; animation-delay: -2s; }
-.h2 { left: 25vw; animation-duration: 13s; animation-delay: -8s; font-size: 18px; }
-.h3 { left: 40vw; animation-duration: 9s;  animation-delay: -5s; font-size: 26px; }
-.h4 { left: 55vw; animation-duration: 15s; animation-delay: -11s; }
-.h5 { left: 70vw; animation-duration: 11s; animation-delay: -6s; font-size: 20px; }
-.h6 { left: 85vw; animation-duration: 14s; animation-delay: -3s; font-size: 28px; }
-.h7 { left: 18vw; animation-duration: 12s; animation-delay: -9s; font-size: 19px; }
-.h8 { left: 62vw; animation-duration: 16s; animation-delay: -12s; font-size: 24px; }
+
+.h1 { left: 10vw; animation-duration: 10s; }
+.h2 { left: 30vw; animation-duration: 13s; }
+.h3 { left: 50vw; animation-duration: 11s; }
+.h4 { left: 70vw; animation-duration: 14s; }
+.h5 { left: 85vw; animation-duration: 12s; }
+.h6 { left: 20vw; animation-duration: 15s; }

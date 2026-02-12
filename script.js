@@ -1,155 +1,113 @@
-// status indicator
-const jsStatus = document.getElementById("jsStatus");
-if (jsStatus) jsStatus.textContent = "✅ Ready";
+const screens = {
+  landing: document.getElementById("landing"),
+  intro: document.getElementById("intro"),
+  quiz: document.getElementById("quiz"),
+  wrong: document.getElementById("wrong"),
+  valentine: document.getElementById("valentine"),
+  yes: document.getElementById("yesScreen"),
+};
 
-// Screens
-const landing = document.getElementById("landing");
-const intro = document.getElementById("intro");
-const quizEl = document.getElementById("quiz");
-const valentine = document.getElementById("valentine");
-const yesScreen = document.getElementById("yesScreen");
-
-const screens = [landing, intro, quizEl, valentine, yesScreen].filter(Boolean);
-
-// Buttons / elements
 const startBtn = document.getElementById("startBtn");
-const beginQuizBtn = document.getElementById("beginQuizBtn");
+const beginBtn = document.getElementById("beginBtn");
+const tryAgainBtn = document.getElementById("tryAgainBtn");
 const restartBtn = document.getElementById("restartBtn");
 
-const progressText = document.getElementById("progressText");
 const quizQuestion = document.getElementById("quizQuestion");
 const quizAnswers = document.getElementById("quizAnswers");
+const progressText = document.getElementById("progressText");
+
+const openWrap = document.getElementById("openWrap");
+const openNextBtn = document.getElementById("openNextBtn");
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const hint = document.getElementById("hint");
+const noHint = document.getElementById("noHint");
 
-const yt = document.getElementById("yt");
-const YT_VIDEO_ID = "J---aiyznGQ";
+const happyYT = document.getElementById("happyYT");
+const cryYT = document.getElementById("cryYT");
 
-// ✅ 10 questions only (then we go to the Valentine YES/NO screen)
+// YouTube IDs
+const HAPPY_YT = "J---aiyznGQ";
+const CRY_YT = "p6J6g6F0W0k";
+
+// Quiz data
 const quiz = [
-  { q: "When did we first meet? 🗓️", a: ["2021", "2022", "2023"] },
-  { q: "How did we first meet? 👀", a: ["Through friends", "Online", "By coincidence"] },
-  { q: "Where was our first proper hangout? 📍", a: ["A café", "A park", "A bar"] },
-  { q: "What was the first thing you noticed about me? 😌", a: ["My smile", "My eyes", "My vibe"] },
-  { q: "What’s our comfort activity together? 🛋️", a: ["Movie night", "Food + chat", "Walks"] },
-  { q: "Pick a Valentine snack 🍫", a: ["Chocolate", "Ice cream", "Both"] },
-  { q: "If we could travel right now ✈️", a: ["Beach", "City", "Mountains"] },
-  { q: "Which vibe is most ‘us’? 💞", a: ["Soft & cute", "Funny & chaotic", "Chill & cozy"] },
-  { q: "What should our Valentine date include? 🍝", a: ["Good food", "A surprise", "A kiss"] },
-  { q: "How much do you love me? 😳", a: ["A lot", "So much", "Infinity"] },
+  { q: "Where did we first meet?", a: ["Genshin Impact (online)", "At a café", "At a party"], c: 0 },
+  { q: "When did we first meet on Genshin?", a: ["Feb 7th", "Jan 1st", "Mar 14th"], c: 0 },
+  { q: "When is our anniversary?", a: ["April 30", "February 14", "July 29"], c: 0 },
+  { q: "When did we meet IRL?", a: ["July 29th", "April 30", "Feb 7th"], c: 0 },
+  { q: "What was our first proper date?", a: ["Chinatown eating frog legs", "Cinema", "Picnic"], c: 0 },
+  { q: "Who made the first move?", a: ["Both", "You", "Me"], c: 0 },
+  { q: "When did we get a civil partnership?", a: ["April 30", "July 29", "Feb 7th"], c: 0 },
+  { q: "What’s our most memorable trip or day together?", open: true },
+  { q: "What is one memory with me you’ll never forget?", open: true },
+  { q: "If we could go anywhere together right now, where would we go?", open: true },
 ];
 
 let idx = 0;
 let noCount = 0;
 
-function showScreen(screen) {
-  screens.forEach(s => {
-    s.classList.add("is-hidden");
-    s.classList.remove("animate-in");
-  });
-  screen.classList.remove("is-hidden");
-  requestAnimationFrame(() => screen.classList.add("animate-in"));
+function show(name) {
+  Object.values(screens).forEach(s => s.classList.remove("active"));
+  screens[name].classList.add("active");
 }
 
-// Initial hide, then show landing
-intro.classList.add("is-hidden");
-quizEl.classList.add("is-hidden");
-valentine.classList.add("is-hidden");
-yesScreen.classList.add("is-hidden");
-showScreen(landing);
-
-// ---- Quiz rendering ----
 function renderQuiz() {
   const item = quiz[idx];
-  progressText.textContent = `Question ${idx + 1} of ${quiz.length}`;
+  progressText.textContent = `Question ${idx + 1} of ${quiz.length + 1}`;
   quizQuestion.textContent = item.q;
   quizAnswers.innerHTML = "";
+  openWrap.style.display = "none";
 
-  item.a.forEach((answer) => {
+  if (item.open) {
+    openWrap.style.display = "block";
+    openNextBtn.onclick = next;
+    return;
+  }
+
+  item.a.forEach((ans, i) => {
     const btn = document.createElement("button");
     btn.className = "btn primary";
-    btn.textContent = answer;
-
-    btn.addEventListener("click", () => {
-      idx++;
-      if (idx >= quiz.length) {
-        // After 10 questions -> show YES/NO valentine screen
-        hint.textContent = "";
-        resetNoButton();
-        noCount = 0;
-        showScreen(valentine);
-      } else {
-        renderQuiz();
-      }
-    });
-
+    btn.textContent = ans;
+    btn.onclick = () => i === item.c ? next() : wrong();
     quizAnswers.appendChild(btn);
   });
 }
 
-// ---- Flow buttons ----
-startBtn.addEventListener("click", () => showScreen(intro));
+function next() {
+  idx++;
+  if (idx >= quiz.length) {
+    show("valentine");
+  } else {
+    renderQuiz();
+  }
+}
 
-beginQuizBtn.addEventListener("click", () => {
-  idx = 0;
-  yt.src = "";
-  showScreen(quizEl);
-  renderQuiz();
-});
+function wrong() {
+  cryYT.src = `https://www.youtube.com/embed/${CRY_YT}?autoplay=1`;
+  show("wrong");
+}
 
-// ---- Valentine YES/NO ----
-yesBtn.addEventListener("click", () => {
-  showScreen(yesScreen);
-  yt.src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`;
-});
+function yes() {
+  happyYT.src = `https://www.youtube.com/embed/${HAPPY_YT}?autoplay=1&loop=1&playlist=${HAPPY_YT}`;
+  show("yes");
+}
 
-function moveNoButton() {
+function moveNo() {
   noCount++;
-
-  const card = document.querySelector(".card");
-  const rect = card.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
-  const pad = 16;
-
-  const maxX = rect.width - btnRect.width - pad;
-  const maxY = rect.height - btnRect.height - pad;
-
-  const x = rect.left + pad + Math.random() * Math.max(1, maxX);
-  const y = rect.top + pad + Math.random() * Math.max(1, maxY);
-
+  noHint.textContent = ["Nice try 😅","Nope 🙃","You sure? 👀","This button is shy…"][Math.min(noCount-1,3)];
   noBtn.style.position = "fixed";
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-
-  const messages = [
-    "Nice try 😅",
-    "Nope 🙃",
-    "You sure? 👀",
-    "This button is shy…",
-    "Okay okay 😂"
-  ];
-  hint.textContent = messages[Math.min(noCount - 1, messages.length - 1)];
+  noBtn.style.left = Math.random() * 80 + "vw";
+  noBtn.style.top = Math.random() * 80 + "vh";
 }
 
-function resetNoButton() {
-  noBtn.style.position = "";
-  noBtn.style.left = "";
-  noBtn.style.top = "";
-}
+// Wiring
+startBtn.onclick = () => show("intro");
+beginBtn.onclick = () => { idx = 0; show("quiz"); renderQuiz(); };
+tryAgainBtn.onclick = () => { idx = 0; show("quiz"); renderQuiz(); };
+yesBtn.onclick = yes;
+noBtn.onmouseenter = moveNo;
+restartBtn.onclick = () => location.reload();
 
-noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  moveNoButton();
-});
-
-// ---- Replay ----
-restartBtn.addEventListener("click", () => {
-  yt.src = "";
-  idx = 0;
-  noCount = 0;
-  resetNoButton();
-  showScreen(landing);
-});
+// Init
+show("landing");

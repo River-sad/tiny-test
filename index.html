@@ -8,11 +8,14 @@
 </head>
 <body>
 
-  <!-- Floating hearts background -->
+  <!-- Floating hearts -->
   <div class="hearts" aria-hidden="true">
-    <span class="heart h1">💖</span><span class="heart h2">💕</span><span class="heart h3">💗</span>
-    <span class="heart h4">💘</span><span class="heart h5">💖</span><span class="heart h6">💕</span>
-    <span class="heart h7">💗</span><span class="heart h8">💘</span>
+    <span class="heart h1">💖</span>
+    <span class="heart h2">💕</span>
+    <span class="heart h3">💗</span>
+    <span class="heart h4">💘</span>
+    <span class="heart h5">💖</span>
+    <span class="heart h6">💕</span>
   </div>
 
   <main class="card">
@@ -21,50 +24,59 @@
     <section id="landing" class="screen">
       <h1>Quick Question</h1>
       <button class="btn primary" id="startBtn">Start</button>
-      <p class="tiny muted" id="jsStatus">Loading…</p>
     </section>
 
     <!-- Intro -->
     <section id="intro" class="screen">
       <p class="muted">I built a tiny quiz. Can you answer all the questions? 😌</p>
-      <button class="btn primary" id="beginQuizBtn">OK</button>
+      <button class="btn primary" id="beginBtn">OK</button>
     </section>
 
     <!-- Quiz -->
     <section id="quiz" class="screen">
       <p class="progress" id="progressText"></p>
-      <h2 id="quizQuestion" class="q"></h2>
-      <div class="answers" id="quizAnswers"></div>
-      <p class="tiny muted">No pressure… but also yes pressure 😌</p>
+      <h2 id="quizQuestion"></h2>
+
+      <div id="quizAnswers" class="answers"></div>
+
+      <div id="openWrap" class="open">
+        <textarea id="openInput" placeholder="Type here..."></textarea>
+        <button class="btn primary" id="openNextBtn">Next</button>
+      </div>
     </section>
 
-    <!-- Final Valentine Question (YES/NO like before) -->
+    <!-- Wrong answer -->
+    <section id="wrong" class="screen">
+      <h2>NOOO 😭💔</h2>
+      <p class="muted">Wrong answer… try again</p>
+
+      <div class="video">
+        <iframe id="cryYT" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+
+      <button class="btn primary" id="tryAgainBtn">Start again</button>
+    </section>
+
+    <!-- Valentine -->
     <section id="valentine" class="screen">
-      <h2 class="q">Will you be my Valentine? 💘</h2>
+      <h2>Will you be my Valentine? 💘</h2>
       <div class="actions">
         <button class="btn primary" id="yesBtn">Yes</button>
         <button class="btn ghost" id="noBtn">No</button>
       </div>
-      <p class="hint" id="hint"></p>
+      <p id="noHint" class="hint"></p>
     </section>
 
-    <!-- Yes -->
+    <!-- Yes screen -->
     <section id="yesScreen" class="screen">
       <h2>YAYYYYY 💘</h2>
       <p class="muted">You just made my whole day ❤️</p>
 
       <div class="video">
-        <iframe
-          id="yt"
-          src=""
-          title="Happy cat"
-          allow="autoplay; encrypted-media"
-          allowfullscreen>
-        </iframe>
+        <iframe id="happyYT" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
 
       <button class="btn ghost" id="restartBtn">Replay</button>
-      <p class="tiny muted">ps: you’re stuck with me now 😌</p>
     </section>
 
   </main>

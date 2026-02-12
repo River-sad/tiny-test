@@ -28,7 +28,7 @@ const cryYT = document.getElementById("cryYT");
 
 // YouTube IDs
 const HAPPY_YT = "J---aiyznGQ";
-const CRY_YT = "p6J6g6F0W0k";
+const CRY_YT = "pBUs2R9JV5M";
 
 // Quiz data
 const quiz = [
